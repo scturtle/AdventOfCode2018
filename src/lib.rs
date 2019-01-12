@@ -1,10 +1,12 @@
 use reqwest::header::{self, HeaderMap};
 
 use std::fs::File;
-use std::io::{Read, Write, Error, ErrorKind};
+use std::io::{Error, ErrorKind, Read, Write};
 use std::path::Path;
 
 pub fn get_input(day: i8) -> std::io::Result<String> {
+    dotenv::dotenv().expect(".env");
+    let session = std::env::var("SESSION").expect("env SESSION");
     let filename = format!("{}.txt", day);
     let path = Path::new(&filename);
     if path.exists() {
@@ -16,8 +18,7 @@ pub fn get_input(day: i8) -> std::io::Result<String> {
     let mut headers = HeaderMap::new();
     headers.insert(
         header::COOKIE,
-        ("session=".to_owned() + &std::env::var("SESSION").expect("env SESSION"))
-            .parse().unwrap(),
+        ("session=".to_owned() + &session).parse().unwrap(),
     );
     let url = format!("https://adventofcode.com/2018/day/{}/input", day);
     let url = reqwest::Url::parse(&url).unwrap();
@@ -26,8 +27,7 @@ pub fn get_input(day: i8) -> std::io::Result<String> {
         .headers(headers)
         .send()
         .and_then(|mut r| r.text())
-        .map_err(|e| Error::new(ErrorKind::Other, e.to_string()))?
-        ;
+        .map_err(|e| Error::new(ErrorKind::Other, e.to_string()))?;
     File::create(path)?.write_all(s.as_bytes())?;
     Ok(s)
 }
