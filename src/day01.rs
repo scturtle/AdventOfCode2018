@@ -1,10 +1,9 @@
-mod common;
-
 use itertools::Itertools;
 
 fn main() {
     let changes = common::get_input(1)
-        .trim_right()
+        .unwrap()
+        .trim_end()
         .split('\n')
         .map(|s| s.parse::<i32>().unwrap())
         .collect_vec();
