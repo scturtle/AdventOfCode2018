@@ -8,6 +8,7 @@ edition = "2018"
 reqwest = "*"
 itertools = "*"
 dotenv = "*"
+regex = "*"
 
 [lib]
 name = "common"
@@ -48,3 +49,7 @@ path = "src/day08.rs"
 [[bin]]
 name = "day09"
 path = "src/day09.rs"
+
+[[bin]]
+name = "day10"
+path = "src/day10.rs"
