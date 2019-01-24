@@ -15,5 +15,5 @@ name = "common"
 path = "src/lib.rs"
 
 [[bin]]
-name = "day16"
-path = "src/day16.rs"
+name = "day17"
+path = "src/day17.rs"
